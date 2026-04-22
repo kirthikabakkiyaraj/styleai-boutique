@@ -4,7 +4,7 @@ import { Sparkles, Send, Minus } from "lucide-react";
 type Msg = { role: "user" | "ai"; text: string };
 
 const seed: Msg[] = [
-  { role: "ai", text: "Hi, I'm your StyleAI assistant ✨\n\nTry: \"Men black shirt under ₹1500\" or \"Women party dress in Chennai\"." },
+  { role: "ai", text: "Hi, I'm your MEYU assistant ✨\n\nTry: \"Men black shirt under ₹1500\" or \"Women party dress in Chennai\"." },
 ];
 
 const quickActions = [
@@ -67,7 +67,7 @@ export function AIChat() {
               <Sparkles className="h-4 w-4" />
             </span>
             <div>
-              <div className="text-sm font-medium">StyleAI Assistant</div>
+              <div className="text-sm font-medium">MEYU Assistant</div>
               <div className="text-[10px] uppercase tracking-[0.25em] text-primary">Online</div>
             </div>
           </div>
@@ -113,7 +113,7 @@ export function AIChat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && ask(input)}
-              placeholder="Ask StyleAI…"
+              placeholder="Ask MEYU…"
               className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground/70 focus:outline-none"
             />
             <button

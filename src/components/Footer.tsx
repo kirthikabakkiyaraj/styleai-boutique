@@ -24,7 +24,7 @@ export function Footer() {
         ))}
       </div>
       <div className="mx-auto mt-10 max-w-[1400px] border-t border-border px-6 pt-6 text-center text-xs text-muted-foreground lg:px-10">
-        © {new Date().getFullYear()} StyleAI · Crafted with intelligence.
+        © {new Date().getFullYear()} MEYU · Crafted with intelligence.
       </div>
     </footer>
   );
