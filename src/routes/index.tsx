@@ -6,6 +6,7 @@ import { ProductGrid } from "@/components/ProductGrid";
 import { AIChat } from "@/components/AIChat";
 import { LoginPopup } from "@/components/LoginPopup";
 import { Footer } from "@/components/Footer";
+import { SplashScreen } from "@/components/SplashScreen";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background">
+      <SplashScreen />
       <Navbar />
       <main>
         <Hero />
