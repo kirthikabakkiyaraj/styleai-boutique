@@ -7,13 +7,13 @@ export function LoginPopup() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("styleai_login_seen")) return;
+    if (sessionStorage.getItem("meyu_login_seen")) return;
     const t = window.setTimeout(() => setOpen(true), 120_000); // 2 minutes
     return () => window.clearTimeout(t);
   }, []);
 
   const close = () => {
-    sessionStorage.setItem("styleai_login_seen", "1");
+    sessionStorage.setItem("meyu_login_seen", "1");
     setOpen(false);
   };
 
@@ -32,7 +32,7 @@ export function LoginPopup() {
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold text-primary-foreground">
             <Sparkles className="h-5 w-5" />
           </div>
-          <h3 className="mt-4 font-display text-3xl">Welcome to <span className="text-gold">StyleAI</span></h3>
+          <h3 className="mt-4 font-display text-3xl">Welcome to <span className="text-gold">MEYU</span></h3>
           <p className="mt-1 text-sm text-muted-foreground">Sign in to unlock personalized luxury picks.</p>
         </div>
 

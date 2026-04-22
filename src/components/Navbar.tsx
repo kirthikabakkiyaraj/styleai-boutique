@@ -4,6 +4,7 @@ import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { womenMenu, menMenu } from "@/lib/catalog";
 import menuWomen from "@/assets/menu-women.jpg";
 import menuMen from "@/assets/menu-men.jpg";
+import meyuLogo from "@/assets/meyu-logo.png";
 
 type MenuKey = "women" | "men" | "kids" | null;
 
@@ -56,9 +57,15 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:px-10">
         {/* Logo */}
-        <Link to="/" className="font-display text-2xl font-semibold tracking-wide">
-          <span className="text-gold">Style</span>
-          <span className="text-foreground">AI</span>
+        <Link to="/" aria-label="MEYU home" className="group flex items-center gap-2.5">
+          <img
+            src={meyuLogo}
+            alt="MEYU"
+            className="h-9 w-auto transition-all duration-500 group-hover:drop-shadow-[0_0_10px_var(--gold)]"
+          />
+          <span className="font-display text-xl font-semibold tracking-[0.35em] text-foreground transition-colors group-hover:text-gold">
+            MEYU
+          </span>
         </Link>
 
         {/* Center menu */}
@@ -135,7 +142,7 @@ export function Navbar() {
           <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
           <div className="absolute right-0 top-0 h-full w-[85%] max-w-sm border-l border-gold/30 bg-card p-6 shadow-2xl">
             <div className="flex items-center justify-between">
-              <span className="font-display text-xl"><span className="text-gold">Style</span>AI</span>
+              <span className="flex items-center gap-2 font-display text-xl"><img src={meyuLogo} alt="MEYU" className="h-7 w-auto" /><span className="tracking-[0.3em] text-gold">MEYU</span></span>
               <button onClick={() => setMobileOpen(false)} aria-label="Close"><X className="h-5 w-5" /></button>
             </div>
             <div className="mt-8 space-y-6">
