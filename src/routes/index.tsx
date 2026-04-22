@@ -1,26 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { CategoryCircles } from "@/components/CategoryCircles";
+import { ProductGrid } from "@/components/ProductGrid";
+import { AIChat } from "@/components/AIChat";
+import { LoginPopup } from "@/components/LoginPopup";
+import { Footer } from "@/components/Footer";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "StyleAI — Luxury AI Fashion, Intelligently Curated" },
+      { name: "description", content: "Discover premium fashion for women & men, personalized by AI. Black & gold luxury shopping experience." },
+      { property: "og:title", content: "StyleAI — Luxury AI Fashion" },
+      { property: "og:description", content: "AI-curated luxury fashion for women & men." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main>
+        <Hero />
+        <CategoryCircles />
+        <ProductGrid />
+      </main>
+      <Footer />
+      <AIChat />
+      <LoginPopup />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
