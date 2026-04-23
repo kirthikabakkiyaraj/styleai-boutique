@@ -126,13 +126,20 @@ export function Navbar() {
               <div key={col.title} className="col-span-2">
                 <div className="mb-4 text-[10px] uppercase tracking-[0.25em] text-primary">{col.title}</div>
                 <ul className="space-y-2.5">
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <a className="text-sm text-foreground/80 transition-colors hover:text-primary" href="#">
-                        {l}
-                      </a>
-                    </li>
-                  ))}
+                  {col.links.map((l) => {
+                    const target = open === "men" ? "/men" : "/women";
+                    return (
+                      <li key={l}>
+                        <Link
+                          to={target}
+                          onClick={() => setOpen(null)}
+                          className="text-sm text-foreground/80 transition-colors hover:text-primary"
+                        >
+                          {l}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
