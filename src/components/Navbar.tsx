@@ -150,9 +150,13 @@ export function Navbar() {
                 <div className="absolute inset-x-0 bottom-0 p-5">
                   <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Limited Drop</div>
                   <div className="mt-1 font-display text-2xl">Up to <span className="text-gold">75% OFF</span></div>
-                  <button className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground underline-offset-4 hover:underline">
+                  <Link
+                    to={open === "men" ? "/men" : "/women"}
+                    onClick={() => setOpen(null)}
+                    className="mt-3 inline-block text-xs uppercase tracking-[0.25em] text-foreground underline-offset-4 hover:underline"
+                  >
                     Shop now →
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
