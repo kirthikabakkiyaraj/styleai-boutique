@@ -44,7 +44,13 @@ function WomenPage() {
         pageTitle="Shop Women"
         pageKicker="Women · Premium Edit"
         pageBlurb="Vibrant silhouettes, festive couture and everyday luxury — handpicked across India's finest ateliers."
-        shopMenu={["Shop All", "Dresses", "Tops", "Co-ord Sets", "Ethnic Wear"]}
+        shopMenu={[
+          { name: "Shop All", image: dress },
+          { name: "Dresses", image: dress },
+          { name: "Tops", image: top },
+          { name: "Co-ord Sets", image: coord },
+          { name: "Ethnic Wear", image: ethnic },
+        ]}
         featured={[
           { name: "Dresses", image: dress, badge: "Trending" },
           { name: "Co-ord Sets", image: coord, badge: "New" },
@@ -89,7 +95,6 @@ function WomenPage() {
             ],
           },
         ]}
-        accent="warm"
       />
       <Footer />
       <AIChat />
