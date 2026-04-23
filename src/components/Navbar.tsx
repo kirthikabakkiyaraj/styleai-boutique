@@ -30,20 +30,37 @@ export function Navbar() {
     closeTimer.current = window.setTimeout(() => setOpen(null), 120);
   };
 
-  const NavTrigger = ({ k, label }: { k: MenuKey; label: string }) => (
-    <button
-      onMouseEnter={() => enter(k)}
-      onFocus={() => enter(k)}
-      className="relative px-1 py-2 text-sm tracking-[0.18em] uppercase text-foreground/80 transition-colors hover:text-primary"
-    >
-      {label}
-      <span
-        className={`pointer-events-none absolute -bottom-0.5 left-0 h-px bg-gold transition-all duration-300 ${
-          open === k ? "w-full" : "w-0"
-        }`}
-      />
-    </button>
-  );
+  const NavTrigger = ({ k, label, to }: { k: MenuKey; label: string; to?: string }) => {
+    const inner = (
+      <>
+        {label}
+        <span
+          className={`pointer-events-none absolute -bottom-0.5 left-0 h-px bg-gold transition-all duration-300 ${
+            open === k ? "w-full" : "w-0"
+          }`}
+        />
+      </>
+    );
+    const cls =
+      "relative px-1 py-2 text-sm tracking-[0.18em] uppercase text-foreground/80 transition-colors hover:text-primary";
+    if (to) {
+      return (
+        <Link
+          to={to}
+          onMouseEnter={() => enter(k)}
+          onFocus={() => enter(k)}
+          className={cls}
+        >
+          {inner}
+        </Link>
+      );
+    }
+    return (
+      <button onMouseEnter={() => enter(k)} onFocus={() => enter(k)} className={cls}>
+        {inner}
+      </button>
+    );
+  };
 
   const menuData = open === "women" ? womenMenu : open === "men" ? menMenu : null;
   const menuImg = open === "women" ? menuWomen : menuMen;
@@ -70,8 +87,8 @@ export function Navbar() {
 
         {/* Center menu */}
         <nav className="hidden items-center gap-10 md:flex">
-          <NavTrigger k="women" label="Women" />
-          <NavTrigger k="men" label="Men" />
+          <NavTrigger k="women" label="Women" to="/women" />
+          <NavTrigger k="men" label="Men" to="/men" />
           <NavTrigger k="kids" label="Kids" />
         </nav>
 
