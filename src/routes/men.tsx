@@ -20,6 +20,17 @@ import jeans from "@/assets/c-jeans.jpg";
 import trousers from "@/assets/c-trousers.jpg";
 import hoodie from "@/assets/c-hoodie.jpg";
 import blazerM from "@/assets/c-blazer-m.jpg";
+import chinos from "@/assets/c-chinos.jpg";
+import shorts from "@/assets/c-shorts.jpg";
+
+import fCotton from "@/assets/f-cotton.jpg";
+import fSilk from "@/assets/f-silk.jpg";
+import fGeorgette from "@/assets/f-georgette.jpg";
+import fRayon from "@/assets/f-rayon.jpg";
+import fChiffon from "@/assets/f-chiffon.jpg";
+import fLinen from "@/assets/f-linen.jpg";
+import fVelvet from "@/assets/f-velvet.jpg";
+import fOrganza from "@/assets/f-organza.jpg";
 
 export const Route = createFileRoute("/men")({
   head: () => ({
@@ -39,8 +50,19 @@ function MenPage() {
       <Navbar />
       <CategoryPage
         pageTitle="Shop Men"
+        breadcrumb="Men"
         pageKicker="Men · Tailored Edit"
-        pageBlurb="Sharp tailoring, refined fabrics and contemporary silhouettes — an edit built for the modern man."
+        pageBlurb="Explore our wide range of men's fashion — sharp tailoring, refined fabrics and modern silhouettes."
+        fabrics={[
+          { name: "Cotton", image: fCotton },
+          { name: "Silk", image: fSilk },
+          { name: "Linen", image: fLinen },
+          { name: "Georgette", image: fGeorgette },
+          { name: "Rayon", image: fRayon },
+          { name: "Chiffon", image: fChiffon },
+          { name: "Velvet", image: fVelvet },
+          { name: "Organza", image: fOrganza },
+        ]}
         shopMenu={[
           { name: "Shop All", image: shirt },
           { name: "Shirts", image: shirt },
@@ -81,10 +103,12 @@ function MenPage() {
           {
             title: "Bottom Wear",
             subtitle: "Denim · Tailored",
-            cols: 2,
+            cols: 4,
             items: [
               { name: "Jeans", image: jeans },
               { name: "Trousers", image: trousers },
+              { name: "Chinos", image: chinos, badge: "New" },
+              { name: "Shorts", image: shorts },
             ],
           },
           {
