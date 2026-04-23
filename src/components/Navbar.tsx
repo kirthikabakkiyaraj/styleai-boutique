@@ -30,20 +30,37 @@ export function Navbar() {
     closeTimer.current = window.setTimeout(() => setOpen(null), 120);
   };
 
-  const NavTrigger = ({ k, label }: { k: MenuKey; label: string }) => (
-    <button
-      onMouseEnter={() => enter(k)}
-      onFocus={() => enter(k)}
-      className="relative px-1 py-2 text-sm tracking-[0.18em] uppercase text-foreground/80 transition-colors hover:text-primary"
-    >
-      {label}
-      <span
-        className={`pointer-events-none absolute -bottom-0.5 left-0 h-px bg-gold transition-all duration-300 ${
-          open === k ? "w-full" : "w-0"
-        }`}
-      />
-    </button>
-  );
+  const NavTrigger = ({ k, label, to }: { k: MenuKey; label: string; to?: string }) => {
+    const inner = (
+      <>
+        {label}
+        <span
+          className={`pointer-events-none absolute -bottom-0.5 left-0 h-px bg-gold transition-all duration-300 ${
+            open === k ? "w-full" : "w-0"
+          }`}
+        />
+      </>
+    );
+    const cls =
+      "relative px-1 py-2 text-sm tracking-[0.18em] uppercase text-foreground/80 transition-colors hover:text-primary";
+    if (to) {
+      return (
+        <Link
+          to={to}
+          onMouseEnter={() => enter(k)}
+          onFocus={() => enter(k)}
+          className={cls}
+        >
+          {inner}
+        </Link>
+      );
+    }
+    return (
+      <button onMouseEnter={() => enter(k)} onFocus={() => enter(k)} className={cls}>
+        {inner}
+      </button>
+    );
+  };
 
   const menuData = open === "women" ? womenMenu : open === "men" ? menMenu : null;
   const menuImg = open === "women" ? menuWomen : menuMen;
@@ -70,8 +87,8 @@ export function Navbar() {
 
         {/* Center menu */}
         <nav className="hidden items-center gap-10 md:flex">
-          <NavTrigger k="women" label="Women" />
-          <NavTrigger k="men" label="Men" />
+          <NavTrigger k="women" label="Women" to="/women" />
+          <NavTrigger k="men" label="Men" to="/men" />
           <NavTrigger k="kids" label="Kids" />
         </nav>
 
@@ -109,13 +126,20 @@ export function Navbar() {
               <div key={col.title} className="col-span-2">
                 <div className="mb-4 text-[10px] uppercase tracking-[0.25em] text-primary">{col.title}</div>
                 <ul className="space-y-2.5">
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <a className="text-sm text-foreground/80 transition-colors hover:text-primary" href="#">
-                        {l}
-                      </a>
-                    </li>
-                  ))}
+                  {col.links.map((l) => {
+                    const target = open === "men" ? "/men" : "/women";
+                    return (
+                      <li key={l}>
+                        <Link
+                          to={target}
+                          onClick={() => setOpen(null)}
+                          className="text-sm text-foreground/80 transition-colors hover:text-primary"
+                        >
+                          {l}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
@@ -126,9 +150,13 @@ export function Navbar() {
                 <div className="absolute inset-x-0 bottom-0 p-5">
                   <div className="text-[10px] uppercase tracking-[0.3em] text-primary">Limited Drop</div>
                   <div className="mt-1 font-display text-2xl">Up to <span className="text-gold">75% OFF</span></div>
-                  <button className="mt-3 text-xs uppercase tracking-[0.25em] text-foreground underline-offset-4 hover:underline">
+                  <Link
+                    to={open === "men" ? "/men" : "/women"}
+                    onClick={() => setOpen(null)}
+                    className="mt-3 inline-block text-xs uppercase tracking-[0.25em] text-foreground underline-offset-4 hover:underline"
+                  >
                     Shop now →
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
