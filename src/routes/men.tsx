@@ -41,7 +41,14 @@ function MenPage() {
         pageTitle="Shop Men"
         pageKicker="Men · Tailored Edit"
         pageBlurb="Sharp tailoring, refined fabrics and contemporary silhouettes — an edit built for the modern man."
-        shopMenu={["Shop All", "Shirts", "T-Shirts", "Ethnic Wear", "Bottom Wear", "Outerwear"]}
+        shopMenu={[
+          { name: "Shop All", image: shirt },
+          { name: "Shirts", image: shirt },
+          { name: "T-Shirts", image: tshirt },
+          { name: "Ethnic Wear", image: mensEthnic },
+          { name: "Bottom Wear", image: jeans },
+          { name: "Outerwear", image: jacket },
+        ]}
         featured={[
           { name: "Shirts", image: shirt, badge: "Trending" },
           { name: "T-Shirts", image: tshirt, badge: "New" },
@@ -91,7 +98,6 @@ function MenPage() {
             ],
           },
         ]}
-        accent="cool"
       />
       <Footer />
       <AIChat />
