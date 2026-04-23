@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Heart, Eye, ShoppingBag } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { useRef } from "react";
 
 export type CategoryItem = {
   name: string;
@@ -14,86 +15,100 @@ export type CategorySection = {
   cols?: 2 | 3 | 4 | 5;
 };
 
+export type FabricItem = {
+  name: string;
+  image: string;
+};
+
 type Props = {
   pageTitle: string;
   pageKicker: string;
   pageBlurb: string;
+  breadcrumb: string;
   shopMenu: CategoryItem[];
-  featured: CategoryItem[];
+  featured?: CategoryItem[];
   sections: CategorySection[];
-  fabrics?: string[];
+  fabrics?: FabricItem[];
 };
 
 export function CategoryPage({
   pageTitle,
   pageKicker,
   pageBlurb,
+  breadcrumb,
   shopMenu,
   featured,
   sections,
-  fabrics = ["Cotton", "Silk", "Georgette", "Rayon", "Chiffon", "Linen", "Velvet", "Organza"],
+  fabrics,
 }: Props) {
   return (
-    <div className="min-h-screen bg-[oklch(0.12_0.005_60)] text-white">
+    <div className="min-h-screen bg-[oklch(0.1_0.005_60)] text-white">
       {/* Hero / page header */}
-      <section className="relative overflow-hidden border-b border-[var(--gold)]/30">
+      <section className="relative overflow-hidden border-b border-[var(--gold)]/20">
         <div
-          className="absolute inset-0 opacity-60"
+          className="absolute inset-0 opacity-50"
           style={{
             background:
-              "radial-gradient(1200px 400px at 20% 0%, oklch(0.3 0.08 75 / 0.35), transparent 60%), radial-gradient(900px 350px at 90% 100%, oklch(0.25 0.1 45 / 0.3), transparent 60%)",
+              "radial-gradient(900px 320px at 50% 0%, oklch(0.3 0.08 75 / 0.3), transparent 60%)",
           }}
         />
-        <div className="relative mx-auto max-w-[1400px] px-6 pb-14 pt-28 lg:px-10 lg:pt-32">
-          <div
-            className="flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)] opacity-0 animate-[fade-in_0.6s_ease-out_0.05s_forwards]"
+        <div className="relative mx-auto max-w-[1400px] px-6 pt-24 lg:px-10 lg:pt-28">
+          {/* Breadcrumb */}
+          <nav
+            className="flex items-center gap-2 text-xs text-white/60 opacity-0 animate-[fade-in_0.5s_ease-out_0.05s_forwards]"
+            aria-label="Breadcrumb"
           >
-            <Sparkles className="h-3 w-3" />
-            {pageKicker}
-          </div>
-          <h1 className="mt-3 font-display text-5xl uppercase leading-tight tracking-wide md:text-7xl opacity-0 animate-[fade-in_0.7s_ease-out_0.15s_forwards] bg-gradient-to-r from-white via-[oklch(0.92_0.06_85)] to-[var(--gold)] bg-clip-text text-transparent">
-            {pageTitle}
-          </h1>
-          <p className="mt-4 max-w-2xl text-base text-white/70 opacity-0 animate-[fade-in_0.7s_ease-out_0.3s_forwards]">
-            {pageBlurb}
-          </p>
-          <div className="mt-6 h-px w-32 bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-0 animate-[fade-in_0.7s_ease-out_0.45s_forwards]" />
-        </div>
-      </section>
+            <Link to="/" className="transition-colors hover:text-[var(--gold)]">
+              Home
+            </Link>
+            <ChevronRight className="h-3 w-3 text-white/40" />
+            <span className="text-[var(--gold)]">{breadcrumb}</span>
+          </nav>
 
-      {/* Shop circular categories */}
-      <section className="mx-auto max-w-[1400px] px-6 pt-12 lg:px-10">
-        <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Shop</div>
-        <div className="mt-6 flex gap-6 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {shopMenu.map((c, i) => (
-            <CircleCategory key={c.name} item={c} index={i} />
-          ))}
-        </div>
-      </section>
-
-      {/* Featured visual cards */}
-      <section className="mx-auto max-w-[1400px] px-6 py-16 lg:px-10">
-        <div className="mb-8 flex items-end justify-between">
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">
-              Premium Collection
+          {/* Centered title block */}
+          <div className="pb-12 pt-8 text-center md:pb-16 md:pt-12">
+            <div
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)] opacity-0 animate-[fade-in_0.6s_ease-out_0.1s_forwards]"
+            >
+              <Sparkles className="h-3 w-3" />
+              {pageKicker}
             </div>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl">Featured Categories</h2>
+            <h1 className="mt-3 font-display text-5xl uppercase leading-tight tracking-[0.08em] md:text-7xl opacity-0 animate-[fade-up_0.7s_ease-out_0.2s_forwards] bg-gradient-to-r from-white via-[oklch(0.92_0.06_85)] to-[var(--gold)] bg-clip-text text-transparent">
+              {pageTitle}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-white/70 opacity-0 animate-[fade-in_0.7s_ease-out_0.35s_forwards] md:text-base">
+              {pageBlurb}
+            </p>
+            <div className="mx-auto mt-6 h-px w-32 bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-0 animate-[fade-in_0.7s_ease-out_0.5s_forwards]" />
           </div>
-          <Link
-            to="/"
-            className="hidden items-center gap-1 text-xs uppercase tracking-[0.25em] text-white/60 transition-colors hover:text-[var(--gold)] md:inline-flex"
-          >
-            View all <ArrowRight className="h-3 w-3" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          {featured.map((c, i) => (
-            <FeaturedCard key={c.name} item={c} index={i} />
-          ))}
         </div>
       </section>
+
+      {/* Shop circular categories with side scroll arrows */}
+      <CircleScroller items={shopMenu} />
+
+      {/* Optional Featured visual cards */}
+      {featured && featured.length > 0 && (
+        <section className="mx-auto max-w-[1400px] px-6 pb-4 pt-12 lg:px-10">
+          <div className="mb-8 flex items-end justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">
+                Premium Collection
+              </div>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl">Featured Categories</h2>
+            </div>
+            <button className="hidden items-center gap-1 text-xs uppercase tracking-[0.25em] text-[var(--gold)] transition-colors hover:text-white md:inline-flex">
+              View all <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+            {featured.map((c, i) => (
+              <FeaturedCard key={c.name} item={c} index={i} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Themed sections */}
       {sections.map((sec, idx) => (
@@ -101,17 +116,77 @@ export function CategoryPage({
       ))}
 
       {/* Shop by fabric */}
-      <section className="mx-auto max-w-[1400px] px-6 py-16 lg:px-10">
-        <div className="rounded-3xl border border-[var(--gold)]/40 bg-gradient-to-br from-[oklch(0.16_0.01_60)] to-[oklch(0.1_0.005_60)] p-8 md:p-12">
-          <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">Curated</div>
-          <h2 className="mt-2 font-display text-3xl md:text-4xl">Shop by Fabric</h2>
-          <div className="mt-8 grid grid-cols-4 gap-6 md:grid-cols-8">
-            {fabrics.map((f, i) => (
-              <FabricCircle key={f} name={f} index={i} />
-            ))}
+      {fabrics && fabrics.length > 0 && (
+        <section className="mx-auto max-w-[1400px] px-6 pb-20 pt-8 lg:px-10">
+          <div className="mb-6 flex items-end justify-between">
+            <h3 className="font-display text-2xl uppercase tracking-[0.15em] text-[var(--gold)] md:text-3xl">
+              Shop By Fabric
+            </h3>
           </div>
-        </div>
-      </section>
+          <FabricScroller items={fabrics} />
+        </section>
+      )}
+    </div>
+  );
+}
+
+/* ------------ Circle scrollers ------------ */
+
+function CircleScroller({ items }: { items: CategoryItem[] }) {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    scrollerRef.current?.scrollBy({ left: dir * 320, behavior: "smooth" });
+  };
+  return (
+    <section className="relative mx-auto max-w-[1400px] px-6 pt-2 lg:px-10">
+      <button
+        aria-label="Scroll left"
+        onClick={() => scrollBy(-1)}
+        className="absolute left-2 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--gold)]/50 bg-black/70 text-[var(--gold)] backdrop-blur transition-all hover:scale-110 hover:border-[var(--gold)] hover:shadow-[0_0_15px_-2px_var(--gold)] md:inline-flex"
+      >
+        <ChevronLeft className="h-4 w-4" />
+      </button>
+      <div
+        ref={scrollerRef}
+        className="flex justify-start gap-8 overflow-x-auto px-2 pb-6 [scrollbar-width:none] md:justify-center [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((c, i) => (
+          <CircleCategory key={c.name} item={c} index={i} />
+        ))}
+      </div>
+      <button
+        aria-label="Scroll right"
+        onClick={() => scrollBy(1)}
+        className="absolute right-2 top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--gold)]/50 bg-black/70 text-[var(--gold)] backdrop-blur transition-all hover:scale-110 hover:border-[var(--gold)] hover:shadow-[0_0_15px_-2px_var(--gold)] md:inline-flex"
+      >
+        <ChevronRight className="h-4 w-4" />
+      </button>
+    </section>
+  );
+}
+
+function FabricScroller({ items }: { items: FabricItem[] }) {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    scrollerRef.current?.scrollBy({ left: dir * 320, behavior: "smooth" });
+  };
+  return (
+    <div className="relative">
+      <div
+        ref={scrollerRef}
+        className="flex gap-6 overflow-x-auto pb-2 pr-12 [scrollbar-width:none] md:gap-8 [&::-webkit-scrollbar]:hidden"
+      >
+        {items.map((f, i) => (
+          <FabricCircle key={f.name} item={f} index={i} />
+        ))}
+      </div>
+      <button
+        aria-label="Scroll right"
+        onClick={() => scrollBy(1)}
+        className="absolute right-0 top-1/2 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--gold)]/50 bg-black/70 text-[var(--gold)] backdrop-blur transition-all hover:scale-110 hover:border-[var(--gold)] hover:shadow-[0_0_15px_-2px_var(--gold)] md:inline-flex"
+      >
+        <ChevronRight className="h-4 w-4" />
+      </button>
     </div>
   );
 }
@@ -121,19 +196,45 @@ function CircleCategory({ item, index }: { item: CategoryItem; index: number }) 
     <button
       className="group flex shrink-0 flex-col items-center gap-3 opacity-0"
       style={{
-        animation: `fade-in 0.5s ease-out ${0.05 * index + 0.1}s forwards, scale-in 0.4s ease-out ${0.05 * index + 0.1}s forwards`,
+        animation: `fade-in 0.5s ease-out ${0.05 * index + 0.1}s forwards`,
       }}
     >
       <div className="relative">
-        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-[var(--gold)] via-[oklch(0.78_0.13_75)] to-[oklch(0.55_0.13_45)] opacity-70 blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
-        <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-[var(--gold)]/70 bg-[oklch(0.16_0.01_60)] transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-[1.08] group-hover:border-[var(--gold)] group-hover:shadow-[0_10px_30px_-8px_var(--gold)] md:h-28 md:w-28">
+        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-[var(--gold)] via-[oklch(0.78_0.13_75)] to-[oklch(0.55_0.13_45)] opacity-60 blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:blur-md" />
+        <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-[var(--gold)]/70 bg-[oklch(0.16_0.01_60)] transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-[1.08] group-hover:border-[var(--gold)] group-hover:shadow-[0_10px_30px_-8px_var(--gold)] md:h-32 md:w-32">
           <img
             src={item.image}
             alt={item.name}
             loading="lazy"
-            width={224}
-            height={224}
-            className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-110"
+            width={256}
+            height={256}
+            className="h-full w-full object-cover opacity-95 transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
+      </div>
+      <span className="text-[11px] uppercase tracking-[0.25em] text-white/85 transition-colors group-hover:text-[var(--gold)]">
+        {item.name}
+      </span>
+    </button>
+  );
+}
+
+function FabricCircle({ item, index }: { item: FabricItem; index: number }) {
+  return (
+    <button
+      className="group flex shrink-0 flex-col items-center gap-2 opacity-0"
+      style={{ animation: `fade-in 0.5s ease-out ${0.04 * index}s forwards` }}
+    >
+      <div className="relative h-20 w-20 md:h-24 md:w-24">
+        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-[var(--gold)] to-[oklch(0.55_0.13_45)] opacity-60 blur-[2px] transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-[var(--gold)]/70 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_8px_24px_-8px_var(--gold)]">
+          <img
+            src={item.image}
+            alt={item.name}
+            loading="lazy"
+            width={192}
+            height={192}
+            className="h-full w-full object-cover"
           />
         </div>
       </div>
@@ -144,24 +245,7 @@ function CircleCategory({ item, index }: { item: CategoryItem; index: number }) 
   );
 }
 
-function FabricCircle({ name, index }: { name: string; index: number }) {
-  return (
-    <button
-      className="group flex flex-col items-center gap-2 opacity-0"
-      style={{ animation: `fade-in 0.5s ease-out ${0.04 * index}s forwards` }}
-    >
-      <div className="relative h-20 w-20">
-        <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-[var(--gold)] to-[oklch(0.55_0.13_45)] opacity-60 blur-[2px] transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="relative flex h-full w-full items-center justify-center rounded-full border border-[var(--gold)]/70 bg-gradient-to-br from-[oklch(0.18_0.01_60)] to-[oklch(0.1_0.005_60)] font-display text-sm text-[var(--gold)] transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_8px_24px_-8px_var(--gold)]">
-          {name.charAt(0)}
-        </div>
-      </div>
-      <span className="text-[10px] uppercase tracking-[0.2em] text-white/70 transition-colors group-hover:text-[var(--gold)]">
-        {name}
-      </span>
-    </button>
-  );
-}
+/* ------------ Featured & Section cards ------------ */
 
 function FeaturedCard({ item, index }: { item: CategoryItem; index: number }) {
   return (
@@ -183,16 +267,13 @@ function FeaturedCard({ item, index }: { item: CategoryItem; index: number }) {
             height={960}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
-          {/* Permanent dark overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
-          {/* Hover overlay */}
           <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)] bg-black/70 px-5 py-2 text-[10px] uppercase tracking-[0.3em] text-[var(--gold)] shadow-[0_8px_30px_-8px_var(--gold)]">
               View Collection <ArrowRight className="h-3 w-3" />
             </span>
           </div>
         </div>
-        {/* Label */}
         <div className="absolute inset-x-0 bottom-0 p-4">
           <div className="flex items-end justify-between">
             <div className="font-display text-xl uppercase tracking-wide text-white md:text-2xl">
@@ -211,7 +292,7 @@ function FeaturedCard({ item, index }: { item: CategoryItem; index: number }) {
 }
 
 function SectionGrid({ section, sectionIndex }: { section: CategorySection; sectionIndex: number }) {
-  const cols = section.cols ?? 3;
+  const cols = section.cols ?? 5;
   const gridClass =
     cols === 2
       ? "grid-cols-1 sm:grid-cols-2"
@@ -222,22 +303,16 @@ function SectionGrid({ section, sectionIndex }: { section: CategorySection; sect
           : "grid-cols-2 md:grid-cols-3 lg:grid-cols-5";
 
   return (
-    <section className="mx-auto max-w-[1400px] px-6 py-12 lg:px-10">
+    <section className="mx-auto max-w-[1400px] px-6 py-8 lg:px-10">
       <div
-        className="mb-6 flex items-end justify-between opacity-0"
-        style={{ animation: `fade-in 0.6s ease-out ${0.05 * sectionIndex}s forwards` }}
+        className="mb-6 flex items-end justify-between border-t border-[var(--gold)]/15 pt-8 opacity-0"
+        style={{ animation: `fade-up 0.6s ease-out ${0.05 * sectionIndex}s forwards` }}
       >
-        <div>
-          <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--gold)]">
-            {section.subtitle ?? "Explore"}
-          </div>
-          <h3 className="mt-2 font-display text-2xl uppercase tracking-wide md:text-3xl">
-            {section.title}
-          </h3>
-          <div className="mt-3 h-px w-20 bg-gradient-to-r from-[var(--gold)] to-transparent" />
-        </div>
-        <button className="hidden items-center gap-1 text-xs uppercase tracking-[0.25em] text-white/60 transition-colors hover:text-[var(--gold)] md:inline-flex">
-          See all <ArrowRight className="h-3 w-3" />
+        <h3 className="font-display text-2xl uppercase tracking-[0.15em] text-[var(--gold)] md:text-3xl">
+          {section.title}
+        </h3>
+        <button className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.25em] text-[var(--gold)] transition-colors hover:text-white">
+          View All <ArrowRight className="h-3 w-3" />
         </button>
       </div>
       <div className={`grid gap-4 md:gap-6 ${gridClass}`}>
@@ -252,7 +327,7 @@ function SectionGrid({ section, sectionIndex }: { section: CategorySection; sect
 function SectionCard({ item, index }: { item: CategoryItem; index: number }) {
   return (
     <div
-      className="group relative overflow-hidden rounded-2xl border border-[var(--gold)]/40 bg-[oklch(0.14_0.008_60)] opacity-0 shadow-[0_10px_30px_-15px_oklch(0.05_0_0/0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[var(--gold)] hover:shadow-[0_20px_45px_-15px_var(--gold)]"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[var(--gold)]/40 bg-[oklch(0.13_0.008_60)] opacity-0 shadow-[0_10px_30px_-15px_oklch(0.05_0_0/0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[var(--gold)] hover:shadow-[0_20px_45px_-15px_var(--gold)]"
       style={{ animation: `fade-in 0.5s ease-out ${0.06 * index}s forwards` }}
     >
       <div className="relative aspect-[3/4] overflow-hidden">
@@ -264,57 +339,24 @@ function SectionCard({ item, index }: { item: CategoryItem; index: number }) {
           height={960}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent" />
 
-        {/* Quick action icons */}
-        <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <IconBtn label="Wishlist" hoverAnim="hover:animate-[scale-in_0.3s_ease-out]">
-            <Heart className="h-3.5 w-3.5" />
-          </IconBtn>
-          <IconBtn label="Quick view">
-            <Eye className="h-3.5 w-3.5" />
-          </IconBtn>
-          <IconBtn label="Add to cart">
-            <ShoppingBag className="h-3.5 w-3.5" />
-          </IconBtn>
-        </div>
-
-        {/* Hover collection overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)] bg-black/70 px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">
-            View Collection <ArrowRight className="h-3 w-3" />
+        {/* Bottom label bar with arrow circle */}
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-4 pb-4 pt-10">
+          <div className="font-display text-base uppercase tracking-[0.18em] text-[var(--gold)] md:text-lg">
+            {item.name}
+          </div>
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--gold)]/70 bg-black/70 text-[var(--gold)] backdrop-blur transition-all duration-300 group-hover:scale-110 group-hover:bg-black group-hover:shadow-[0_0_15px_-2px_var(--gold)]">
+            <ArrowRight className="h-3.5 w-3.5" />
           </span>
         </div>
-      </div>
-      <div className="flex items-center justify-between border-t border-[var(--gold)]/20 bg-black/40 p-4">
-        <div className="font-display text-lg uppercase tracking-wide text-[var(--gold)]">
-          {item.name}
-        </div>
+
         {item.badge && (
-          <span className="rounded-full border border-[var(--gold)]/60 bg-black/60 px-2.5 py-1 text-[9px] uppercase tracking-wider text-[var(--gold)]">
+          <span className="absolute left-3 top-3 rounded-full border border-[var(--gold)]/60 bg-black/70 px-2.5 py-1 text-[9px] uppercase tracking-wider text-[var(--gold)] backdrop-blur">
             {item.badge}
           </span>
         )}
       </div>
     </div>
-  );
-}
-
-function IconBtn({
-  children,
-  label,
-  hoverAnim = "",
-}: {
-  children: React.ReactNode;
-  label: string;
-  hoverAnim?: string;
-}) {
-  return (
-    <button
-      aria-label={label}
-      className={`flex h-8 w-8 items-center justify-center rounded-full border border-[var(--gold)]/60 bg-black/70 text-[var(--gold)] backdrop-blur transition-all duration-200 hover:scale-110 hover:border-[var(--gold)] hover:bg-black hover:shadow-[0_0_15px_-2px_var(--gold)] active:scale-95 ${hoverAnim}`}
-    >
-      {children}
-    </button>
   );
 }
