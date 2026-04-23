@@ -24,6 +24,15 @@ import blazerW from "@/assets/c-blazer-w.jpg";
 import coat from "@/assets/c-coat.jpg";
 import cape from "@/assets/c-cape.jpg";
 
+import fCotton from "@/assets/f-cotton.jpg";
+import fSilk from "@/assets/f-silk.jpg";
+import fGeorgette from "@/assets/f-georgette.jpg";
+import fRayon from "@/assets/f-rayon.jpg";
+import fChiffon from "@/assets/f-chiffon.jpg";
+import fLinen from "@/assets/f-linen.jpg";
+import fVelvet from "@/assets/f-velvet.jpg";
+import fOrganza from "@/assets/f-organza.jpg";
+
 export const Route = createFileRoute("/women")({
   head: () => ({
     meta: [
@@ -42,8 +51,19 @@ function WomenPage() {
       <Navbar />
       <CategoryPage
         pageTitle="Shop Women"
+        breadcrumb="Women"
         pageKicker="Women · Premium Edit"
-        pageBlurb="Vibrant silhouettes, festive couture and everyday luxury — handpicked across India's finest ateliers."
+        pageBlurb="Explore our wide range of women's fashion — festive couture, everyday luxury and modern silhouettes."
+        fabrics={[
+          { name: "Cotton", image: fCotton },
+          { name: "Silk", image: fSilk },
+          { name: "Georgette", image: fGeorgette },
+          { name: "Rayon", image: fRayon },
+          { name: "Chiffon", image: fChiffon },
+          { name: "Linen", image: fLinen },
+          { name: "Velvet", image: fVelvet },
+          { name: "Organza", image: fOrganza },
+        ]}
         shopMenu={[
           { name: "Shop All", image: dress },
           { name: "Dresses", image: dress },
