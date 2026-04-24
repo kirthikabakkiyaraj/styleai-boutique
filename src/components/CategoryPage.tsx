@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useRef } from "react";
 
+
 export type CategoryItem = {
   name: string;
   image: string;
@@ -25,6 +26,7 @@ type Props = {
   pageKicker: string;
   pageBlurb: string;
   breadcrumb: string;
+  gender: "women" | "men";
   shopMenu: CategoryItem[];
   featured?: CategoryItem[];
   sections: CategorySection[];
