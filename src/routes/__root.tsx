@@ -1,6 +1,11 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { ShopProvider } from "@/lib/shop-context";
+import { CartDrawer } from "@/components/CartDrawer";
+import { WishlistDrawer } from "@/components/WishlistDrawer";
+import { SearchOverlay } from "@/components/SearchOverlay";
+import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -61,5 +66,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <ShopProvider>
+      <Outlet />
+      <CartDrawer />
+      <WishlistDrawer />
+      <SearchOverlay />
+      <Toaster />
+    </ShopProvider>
+  );
 }

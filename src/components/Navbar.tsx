@@ -5,6 +5,7 @@ import { womenMenu, menMenu } from "@/lib/catalog";
 import menuWomen from "@/assets/menu-women.jpg";
 import menuMen from "@/assets/menu-men.jpg";
 import meyuLogo from "@/assets/meyu-logo.png";
+import { useShop } from "@/lib/shop-context";
 
 type MenuKey = "women" | "men" | "kids" | null;
 
@@ -13,6 +14,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<number | null>(null);
+  const { cartCount, wishlist, setCartOpen, setWishlistOpen, setSearchOpen, setLoginOpen } = useShop();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -45,12 +47,7 @@ export function Navbar() {
       "relative px-1 py-2 text-sm tracking-[0.18em] uppercase text-foreground/80 transition-colors hover:text-primary";
     if (to) {
       return (
-        <Link
-          to={to}
-          onMouseEnter={() => enter(k)}
-          onFocus={() => enter(k)}
-          className={cls}
-        >
+        <Link to={to} onMouseEnter={() => enter(k)} onFocus={() => enter(k)} className={cls}>
           {inner}
         </Link>
       );
@@ -73,7 +70,6 @@ export function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 lg:px-10">
-        {/* Logo */}
         <Link to="/" aria-label="MEYU home" className="group flex items-center gap-2.5">
           <img
             src={meyuLogo}
@@ -85,25 +81,40 @@ export function Navbar() {
           </span>
         </Link>
 
-        {/* Center menu */}
         <nav className="hidden items-center gap-10 md:flex">
           <NavTrigger k="women" label="Women" to="/women" />
           <NavTrigger k="men" label="Men" to="/men" />
           <NavTrigger k="kids" label="Kids" />
         </nav>
 
-        {/* Right */}
-        <div className="flex items-center gap-3 md:gap-5">
-          <div className="hidden items-center gap-2 rounded-full border border-border bg-secondary/60 px-4 py-2 lg:flex">
+        <div className="flex items-center gap-2 md:gap-4">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="hidden items-center gap-2 rounded-full border border-border bg-secondary/60 px-4 py-2 text-left text-sm text-muted-foreground/70 transition-colors hover:border-gold/60 lg:flex"
+          >
             <Search className="h-4 w-4 text-muted-foreground" />
-            <input
-              placeholder="Search for products, styles..."
-              className="w-56 bg-transparent text-sm placeholder:text-muted-foreground/70 focus:outline-none"
-            />
-          </div>
-          <IconBtn label="Account"><User className="h-[18px] w-[18px]" /></IconBtn>
-          <IconBtn label="Wishlist"><Heart className="h-[18px] w-[18px]" /></IconBtn>
-          <IconBtn label="Cart" badge={2}><ShoppingBag className="h-[18px] w-[18px]" /></IconBtn>
+            <span className="w-48">Search products, styles…</span>
+          </button>
+          <IconBtn label="Search" onClick={() => setSearchOpen(true)} className="lg:hidden">
+            <Search className="h-[18px] w-[18px]" />
+          </IconBtn>
+          <IconBtn label="Account" onClick={() => setLoginOpen(true)}>
+            <User className="h-[18px] w-[18px]" />
+          </IconBtn>
+          <IconBtn
+            label="Wishlist"
+            onClick={() => setWishlistOpen(true)}
+            badge={wishlist.length || undefined}
+          >
+            <Heart className="h-[18px] w-[18px]" />
+          </IconBtn>
+          <IconBtn
+            label="Cart"
+            onClick={() => setCartOpen(true)}
+            badge={cartCount || undefined}
+          >
+            <ShoppingBag className="h-[18px] w-[18px]" />
+          </IconBtn>
           <button
             className="ml-1 rounded-full p-2 hover:text-primary md:hidden"
             onClick={() => setMobileOpen(true)}
@@ -114,7 +125,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mega menu */}
       {menuData && (
         <div
           onMouseEnter={() => enter(open)}
@@ -127,11 +137,13 @@ export function Navbar() {
                 <div className="mb-4 text-[10px] uppercase tracking-[0.25em] text-primary">{col.title}</div>
                 <ul className="space-y-2.5">
                   {col.links.map((l) => {
-                    const target = open === "men" ? "/men" : "/women";
+                    const gender = open === "men" ? "men" : "women";
+                    const isAll = l === "Shop All" || l === "Ethnic Wear" || l === "Bottom Wear" || l === "Outerwear";
                     return (
                       <li key={l}>
                         <Link
-                          to={target}
+                          to="/products"
+                          search={isAll ? { gender } : { gender, category: l }}
                           onClick={() => setOpen(null)}
                           className="text-sm text-foreground/80 transition-colors hover:text-primary"
                         >
@@ -164,7 +176,6 @@ export function Navbar() {
         </div>
       )}
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-background/80 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
@@ -174,12 +185,20 @@ export function Navbar() {
               <button onClick={() => setMobileOpen(false)} aria-label="Close"><X className="h-5 w-5" /></button>
             </div>
             <div className="mt-8 space-y-6">
-              {(["Women", "Men", "Kids"] as const).map((s) => (
-                <div key={s}>
-                  <div className="text-xs uppercase tracking-[0.3em] text-primary">{s}</div>
+              {(["women", "men"] as const).map((g) => (
+                <div key={g}>
+                  <div className="text-xs uppercase tracking-[0.3em] text-primary">{g}</div>
                   <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2">
-                    {(s === "Men" ? menMenu : womenMenu).flatMap((c) => c.links).slice(0, 8).map((l) => (
-                      <a key={l} href="#" className="text-sm text-foreground/80">{l}</a>
+                    {(g === "men" ? menMenu : womenMenu).flatMap((c) => c.links).slice(0, 8).map((l) => (
+                      <Link
+                        key={l}
+                        to="/products"
+                        search={{ gender: g, category: l }}
+                        onClick={() => setMobileOpen(false)}
+                        className="text-sm text-foreground/80"
+                      >
+                        {l}
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -196,19 +215,24 @@ function IconBtn({
   children,
   label,
   badge,
+  onClick,
+  className,
 }: {
   children: React.ReactNode;
   label: string;
   badge?: number;
+  onClick?: () => void;
+  className?: string;
 }) {
   return (
     <button
       aria-label={label}
-      className="relative rounded-full p-2 text-foreground/85 transition-colors hover:text-primary"
+      onClick={onClick}
+      className={`relative rounded-full p-2 text-foreground/85 transition-colors hover:text-primary ${className ?? ""}`}
     >
       {children}
       {badge ? (
-        <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-gold text-[10px] font-semibold text-primary-foreground">
+        <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[10px] font-semibold text-primary-foreground">
           {badge}
         </span>
       ) : null}

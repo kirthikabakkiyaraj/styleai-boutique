@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WomenRouteImport } from './routes/women'
+import { Route as ProductsRouteImport } from './routes/products'
 import { Route as MenRouteImport } from './routes/men'
 import { Route as IndexRouteImport } from './routes/index'
 
 const WomenRoute = WomenRouteImport.update({
   id: '/women',
   path: '/women',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MenRoute = MenRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/men': typeof MenRoute
+  '/products': typeof ProductsRoute
   '/women': typeof WomenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/men': typeof MenRoute
+  '/products': typeof ProductsRoute
   '/women': typeof WomenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/men': typeof MenRoute
+  '/products': typeof ProductsRoute
   '/women': typeof WomenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/men' | '/women'
+  fullPaths: '/' | '/men' | '/products' | '/women'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/men' | '/women'
-  id: '__root__' | '/' | '/men' | '/women'
+  to: '/' | '/men' | '/products' | '/women'
+  id: '__root__' | '/' | '/men' | '/products' | '/women'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MenRoute: typeof MenRoute
+  ProductsRoute: typeof ProductsRoute
   WomenRoute: typeof WomenRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/women'
       fullPath: '/women'
       preLoaderRoute: typeof WomenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/men': {
@@ -88,17 +105,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MenRoute: MenRoute,
+  ProductsRoute: ProductsRoute,
   WomenRoute: WomenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
