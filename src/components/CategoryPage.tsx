@@ -38,6 +38,7 @@ export function CategoryPage({
   pageKicker,
   pageBlurb,
   breadcrumb,
+  gender,
   shopMenu,
   featured,
   sections,
@@ -45,7 +46,6 @@ export function CategoryPage({
 }: Props) {
   return (
     <div className="min-h-screen bg-[oklch(0.1_0.005_60)] text-white">
-      {/* Hero / page header */}
       <section className="relative overflow-hidden border-b border-[var(--gold)]/20">
         <div
           className="absolute inset-0 opacity-50"
@@ -55,7 +55,6 @@ export function CategoryPage({
           }}
         />
         <div className="relative mx-auto max-w-[1400px] px-6 pt-24 lg:px-10 lg:pt-28">
-          {/* Breadcrumb */}
           <nav
             className="flex items-center gap-2 text-xs text-white/60 opacity-0 animate-[fade-in_0.5s_ease-out_0.05s_forwards]"
             aria-label="Breadcrumb"
@@ -67,11 +66,8 @@ export function CategoryPage({
             <span className="text-[var(--gold)]">{breadcrumb}</span>
           </nav>
 
-          {/* Centered title block */}
           <div className="pb-12 pt-8 text-center md:pb-16 md:pt-12">
-            <div
-              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)] opacity-0 animate-[fade-in_0.6s_ease-out_0.1s_forwards]"
-            >
+            <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[var(--gold)] opacity-0 animate-[fade-in_0.6s_ease-out_0.1s_forwards]">
               <Sparkles className="h-3 w-3" />
               {pageKicker}
             </div>
@@ -86,10 +82,8 @@ export function CategoryPage({
         </div>
       </section>
 
-      {/* Shop circular categories with side scroll arrows */}
-      <CircleScroller items={shopMenu} />
+      <CircleScroller items={shopMenu} gender={gender} />
 
-      {/* Optional Featured visual cards */}
       {featured && featured.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-6 pb-4 pt-12 lg:px-10">
           <div className="mb-8 flex items-end justify-between">
@@ -99,25 +93,27 @@ export function CategoryPage({
               </div>
               <h2 className="mt-2 font-display text-3xl md:text-4xl">Featured Categories</h2>
             </div>
-            <button className="hidden items-center gap-1 text-xs uppercase tracking-[0.25em] text-[var(--gold)] transition-colors hover:text-white md:inline-flex">
+            <Link
+              to="/products"
+              search={{ gender }}
+              className="hidden items-center gap-1 text-xs uppercase tracking-[0.25em] text-[var(--gold)] transition-colors hover:text-white md:inline-flex"
+            >
               View all <ArrowRight className="h-3 w-3" />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {featured.map((c, i) => (
-              <FeaturedCard key={c.name} item={c} index={i} />
+              <FeaturedCard key={c.name} item={c} index={i} gender={gender} />
             ))}
           </div>
         </section>
       )}
 
-      {/* Themed sections */}
       {sections.map((sec, idx) => (
-        <SectionGrid key={sec.title} section={sec} sectionIndex={idx} />
+        <SectionGrid key={sec.title} section={sec} sectionIndex={idx} gender={gender} />
       ))}
 
-      {/* Shop by fabric */}
       {fabrics && fabrics.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-6 pb-20 pt-8 lg:px-10">
           <div className="mb-6 flex items-end justify-between">
@@ -131,6 +127,7 @@ export function CategoryPage({
     </div>
   );
 }
+
 
 /* ------------ Circle scrollers ------------ */
 
