@@ -140,6 +140,29 @@ export function getProduct(id: string) {
   return products.find((p) => p.id === id);
 }
 
+export const categories: Record<"women" | "men", { name: string; image: string }[]> = {
+  women: [
+    { name: "Dresses", image: dress },
+    { name: "Co-ord Sets", image: coord },
+    { name: "Tops", image: topImg },
+    { name: "Sarees", image: saree },
+    { name: "Lehenga", image: lehenga },
+    { name: "Kurtis", image: kurti },
+    { name: "Jeans", image: jeans },
+    { name: "Jackets", image: jacket },
+  ],
+  men: [
+    { name: "Casual Shirts", image: shirtCasual },
+    { name: "Formal Shirts", image: shirtFormal },
+    { name: "Plain", image: teePlain },
+    { name: "Polo", image: teePolo },
+    { name: "Jeans", image: jeans },
+    { name: "Chinos", image: chinos },
+    { name: "Hoodies", image: hoodie },
+    { name: "Jackets", image: jacket },
+  ],
+};
+
 export const womenMenu = [
   { title: "Shop", links: ["Shop All", "Dresses", "Tops", "Co-ord Sets", "Ethnic Wear"] },
   { title: "Ethnic", links: ["Kurtis", "Sarees", "Lehenga", "Anarkali", "Dupattas"] },
