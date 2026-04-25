@@ -51,6 +51,7 @@ function MenPage() {
       <CategoryPage
         pageTitle="Shop Men"
         breadcrumb="Men"
+        gender="men"
         pageKicker="Men · Tailored Edit"
         pageBlurb="Explore our wide range of men's fashion — sharp tailoring, refined fabrics and modern silhouettes."
         fabrics={[

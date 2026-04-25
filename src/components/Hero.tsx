@@ -1,4 +1,5 @@
 import { ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import heroWomen from "@/assets/hero-women.jpg";
 import heroMen from "@/assets/hero-men.jpg";
 
@@ -30,14 +31,20 @@ export function Hero() {
           A new kind of luxury fashion experience — discover pieces tailored to your taste, mood and moment.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4" style={{ animation: "var(--animate-fade-up)", animationDelay: "240ms" }}>
-          <button className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground transition-all hover:glow-gold">
+          <Link
+            to="/women"
+            className="group inline-flex items-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground transition-all hover:glow-gold"
+          >
             Shop Women
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </button>
-          <button className="group inline-flex items-center gap-2 rounded-full border border-gold/60 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-foreground transition-all hover:bg-gold hover:text-primary-foreground">
+          </Link>
+          <Link
+            to="/men"
+            className="group inline-flex items-center gap-2 rounded-full border border-gold/60 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-foreground transition-all hover:bg-gold hover:text-primary-foreground"
+          >
             Shop Men
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

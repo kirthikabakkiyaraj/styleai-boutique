@@ -5,6 +5,7 @@ import { ShopProvider } from "@/lib/shop-context";
 import { CartDrawer } from "@/components/CartDrawer";
 import { WishlistDrawer } from "@/components/WishlistDrawer";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { AuthPopup } from "@/components/AuthPopup";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -72,6 +73,7 @@ function RootComponent() {
       <CartDrawer />
       <WishlistDrawer />
       <SearchOverlay />
+      <AuthPopup />
       <Toaster />
     </ShopProvider>
   );

@@ -4,7 +4,6 @@ import { Hero } from "@/components/Hero";
 import { CategoryCircles } from "@/components/CategoryCircles";
 import { ProductGrid } from "@/components/ProductGrid";
 import { AIChat } from "@/components/AIChat";
-import { LoginPopup } from "@/components/LoginPopup";
 import { Footer } from "@/components/Footer";
 import { SplashScreen } from "@/components/SplashScreen";
 
@@ -32,7 +31,6 @@ function Index() {
       </main>
       <Footer />
       <AIChat />
-      <LoginPopup />
     </div>
   );
 }

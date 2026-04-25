@@ -52,6 +52,7 @@ function WomenPage() {
       <CategoryPage
         pageTitle="Shop Women"
         breadcrumb="Women"
+        gender="women"
         pageKicker="Women · Premium Edit"
         pageBlurb="Explore our wide range of women's fashion — festive couture, everyday luxury and modern silhouettes."
         fabrics={[
